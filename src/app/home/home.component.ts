@@ -1,12 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 import { ShowsInfo, Show } from '../models';
 import { ShowService } from '../show.service';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatBadgeModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

@@ -1,13 +1,22 @@
 <!-- <p>home works!</p> -->
 
-<div style="margin: 10px">
-  <a routerLink="/list/0" href="#" role="button">
-    <!-- <i class="fa fa-list"></i> -->
-    View All Shows ({{ allShows.length }})
-  </a>
-</div>
+<div style="display: flex; flex-direction: column">
+  <!-- <button mat-fab extended>
+    <mat-icon>list</mat-icon>
+    <a routerLink="/list/0" href="#" role="button" mat-button>
+      <div [matBadge]="allShows.length" matBadgeOverlap="false">
+        View All Shows
+      </div>
+    </a>
+  </button> -->
 
-<div style="margin: 10px">
+  <a routerLink="/list/0" href="#" role="button" mat-fab extended>
+    <div [matBadge]="allShows.length" matBadgeOverlap="false">
+      <mat-icon>list</mat-icon>
+      View All Shows
+    </div>
+  </a>
+
   <a
     routerLink="/list/1"
     [ngClass]="{
@@ -17,29 +26,43 @@
     }"
     href="#"
     role="button"
+    mat-fab
+    extended
   >
-    <!-- <i class="fa fa-list"></i>  -->
-    Added Today ({{ addedTodayShows.length }})
+    <div
+      [matBadge]="addedTodayShows.length"
+      matBadgeOverlap="false"
+      [matBadgeHidden]="addedTodayShows.length === 0"
+    >
+      <mat-icon>list</mat-icon>
+      Added Today
+    </div>
   </a>
-</div>
 
-<div style="margin: 10px">
-  <a routerLink="/list/3" href="#" role="button">
-    <!-- <i class="fa fa-list"></i>  -->
-    Added In Last 3 Days ({{ addedWithin3DaysShows.length }})
+  <a routerLink="/list/3" href="#" role="button" mat-fab extended>
+    <div
+      [matBadge]="addedWithin3DaysShows.length"
+      matBadgeOverlap="false"
+      [matBadgeHidden]="addedWithin3DaysShows.length === 0"
+    >
+      <mat-icon>list</mat-icon>
+      Added In Last 3 Days
+    </div>
   </a>
-</div>
 
-<div style="margin: 10px">
-  <a routerLink="/list/7" href="#" role="button">
-    <!-- <i class="fa fa-list"></i>  -->
-    Added In Last 7 Days ({{ addedWithin7DaysShows.length }})
+  <a routerLink="/list/7" href="#" role="button" mat-fab extended>
+    <div
+      [matBadge]="addedWithin7DaysShows.length"
+      matBadgeOverlap="false"
+      [matBadgeHidden]="addedWithin7DaysShows.length === 0"
+    >
+      <mat-icon>list</mat-icon>
+      Added In Last 7 Days
+    </div>
   </a>
-</div>
 
-<div style="margin: 10px">
-  <a routerLink="/create" href="#" role="button">
-    <!-- <i class="fa fa-plus-circle"></i>  -->
+  <a routerLink="/create" href="#" role="button" mat-fab extended>
+    <mat-icon>add_circle</mat-icon>
     Add New Show
   </a>
 </div>
