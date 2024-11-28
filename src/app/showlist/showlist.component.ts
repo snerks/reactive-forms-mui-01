@@ -36,7 +36,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './showlist.component.css',
 })
 export class ShowlistComponent implements OnInit {
-  displayedColumns: string[] = ['day', 'date', 'artists', 'venue'];
+  displayedColumns: string[] = ['day', 'date', 'artists', 'venue', 'actions'];
 
   showsInfo: ShowsInfo | null = null;
 
