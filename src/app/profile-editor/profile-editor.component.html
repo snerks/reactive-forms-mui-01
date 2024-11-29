@@ -1,0 +1,451 @@
+<!-- <p>profile-editor works!</p> -->
+<div style="margin-top: 15px; padding-left: 15px; padding-right: 15px">
+  <form
+    [formGroup]="$any(profileForm)"
+    (ngSubmit)="onSubmit()"
+    class="needs-validation"
+    novalidate
+  >
+    <div style="display: flex; flex-direction: column; align-items: stretch">
+      <div class="form-group">
+        <!-- <label for="date">Event Date</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="yyyy-mm-dd"
+            name="dp"
+            formControlName="date"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" type="button">
+            </button>
+          </div>
+        </div> -->
+        <mat-form-field>
+          <mat-label>Event Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [formControl]="$any(profileForm && profileForm.controls['date'])"
+          />
+          <!-- [formControl]="$any(profileForm.controls['date'])" -->
+          <!-- <mat-hint>DD/MM/YYYY</mat-hint> -->
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div
+          *ngIf="
+            profileForm?.get('date')?.invalid &&
+            (profileForm?.get('date')?.dirty ||
+              profileForm?.get('date')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          Please choose an Event Date.
+        </div>
+      </div>
+
+      <!-- <div class="form-group">
+        <label for="venue">Venue</label>
+        <input
+          formControlName="venue"
+          type="text"
+          class="form-control"
+          id="venue"
+          aria-describedby="venueHelp"
+          required
+        />
+        <div
+          *ngIf="
+            profileForm?.get('venue')?.invalid &&
+            (profileForm?.get('venue')?.dirty ||
+              profileForm?.get('venue')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          Please choose a Venue.
+        </div>
+      </div> -->
+
+      <div>
+        <mat-form-field>
+          <mat-label>Venue</mat-label>
+          <input matInput id="venue" formControlName="venue" />
+        </mat-form-field>
+        <div
+          *ngIf="
+            profileForm?.get('venue')?.invalid &&
+            (profileForm?.get('venue')?.dirty ||
+              profileForm?.get('venue')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          Please choose a Venue.
+        </div>
+      </div>
+
+      <!-- <div formArrayName="artists" class="clearfix">
+        <div *ngFor="let artist of artists.controls; let i = index">
+          <div class="form-group" [formGroupName]="i">
+            <label for="artistName">Artist Name {{ i + 1 }}</label>
+            <input
+              formControlName="name"
+              type="text"
+              class="form-control"
+              id="artistName"
+              aria-describedby="artistNameHelp"
+              required
+            />
+            <div
+              *ngIf="
+                artist?.get('name')?.invalid &&
+                (artist?.get('name')?.dirty || artist?.get('name')?.touched)
+              "
+              class="alert alert-danger"
+            >
+              Please choose an Artist Name.
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button
+            class="btn btn-outline-dark float-right btn-sm"
+            type="button"
+            (click)="addArtist()"
+          >
+            Add Artist
+          </button>
+        </div>
+      </div> -->
+
+      <div formArrayName="artists" class="clearfix">
+        <div *ngFor="let artist of artists.controls; let i = index">
+          <div class="form-group" [formGroupName]="i">
+            <!-- <label for="artistName">Artist Name {{ i + 1 }}</label>
+          <input
+            formControlName="name"
+            type="text"
+            class="form-control"
+            id="artistName"
+            aria-describedby="artistNameHelp"
+            required
+          /> -->
+            <mat-form-field>
+              <mat-label>Artist Name {{ i + 1 }}</mat-label>
+              <input matInput formControlName="name" required />
+            </mat-form-field>
+            <div
+              *ngIf="
+                artist.get('name')?.invalid &&
+                (artist.get('name')?.dirty || artist.get('name')?.touched)
+              "
+              class="alert alert-danger"
+            >
+              Please choose an Artist Name.
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end">
+          <!-- <button
+          class="btn btn-outline-dark float-right btn-sm"
+          type="button"
+          (click)="addArtist()"
+        >
+          Add Artist
+        </button> -->
+          <button mat-fab extended (click)="addArtist()">
+            <mat-icon>add_circle</mat-icon>
+            Add Artist
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <hr />
+      </div>
+
+      <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button
+          type="button"
+          class="btn btn-success btn-sm"
+          [ngStyle]="{
+            cursor: profileForm?.valid ? 'pointer' : 'not-allowed',
+            margin: '5px'
+          }"
+          (click)="submitShow()"
+          [disabled]="!profileForm?.valid"
+        >
+          OK
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-sm"
+          style="margin: 5px"
+          (click)="cancelAddShow()"
+        >
+          Cancel
+        </button>
+      </div> -->
+
+      <div style="display: flex; justify-content: end; align-items: center">
+        <button
+          mat-stroked-button
+          [ngStyle]="{
+            cursor: profileForm?.valid ? 'pointer' : 'not-allowed',
+            margin: '5px'
+          }"
+          (click)="submitShow()"
+          [disabled]="!profileForm?.valid"
+        >
+          OK
+        </button>
+
+        <button mat-stroked-button (click)="cancelUpdateShow()">Cancel</button>
+      </div>
+
+      <br />
+
+      <!-- <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="isSoldOutCheckBox"
+          formControlName="isSoldOut"
+        />
+        <label class="form-check-label" for="isSoldOutCheckBox">Sold Out</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="isCancelledCheckBox"
+          formControlName="isCancelled"
+        />
+        <label class="form-check-label" for="isCancelledCheckBox"
+          >Cancelled</label
+        >
+      </div> -->
+
+      <div>
+        <mat-checkbox formControlName="isSoldOut">Sold Out</mat-checkbox>
+      </div>
+      <div>
+        <mat-checkbox formControlName="isCancelled">Cancelled</mat-checkbox>
+      </div>
+
+      <div>
+        <hr />
+      </div>
+
+      <!-- <div class="form-group">
+        <label for="notes">Notes</label>
+        <input
+          formControlName="notes"
+          type="text"
+          class="form-control"
+          id="notes"
+          aria-describedby="notesHelp"
+        />
+        <div
+          *ngIf="
+            profileForm?.get('notes')?.invalid &&
+            (profileForm?.get('notes')?.dirty ||
+              profileForm?.get('notes')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          Please add some notes.
+        </div>
+      </div> -->
+
+      <div class="form-group">
+        <!-- <label for="notes">Notes</label>
+      <input
+        formControlName="notes"
+        type="text"
+        class="form-control"
+        id="notes"
+        aria-describedby="notesHelp"
+      /> -->
+        <mat-form-field>
+          <mat-label>Notes</mat-label>
+          <input matInput id="notes" formControlName="notes" />
+        </mat-form-field>
+        <div
+          *ngIf="
+            profileForm?.get('notes')?.invalid &&
+            (profileForm?.get('notes')?.dirty ||
+              profileForm?.get('notes')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          Please add some notes.
+        </div>
+      </div>
+
+      <!-- <div class="form-group">
+        <label for="priceText">Price</label>
+        <input
+          formControlName="priceText"
+          type="text"
+          class="form-control"
+          id="priceText"
+          aria-describedby="priceTextHelp"
+        />
+        <div
+          *ngIf="
+            profileForm?.get('priceText')?.invalid &&
+            (profileForm?.get('priceText')?.dirty ||
+              profileForm?.get('priceText')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          Please add price details.
+        </div>
+      </div> -->
+
+      <div class="form-group">
+        <!-- <label for="priceText">Price</label>
+      <input
+        formControlName="priceText"
+        type="text"
+        class="form-control"
+        id="priceText"
+        aria-describedby="priceTextHelp"
+      /> -->
+        <mat-form-field>
+          <mat-label>Price</mat-label>
+          <input matInput id="priceText" formControlName="priceText" />
+        </mat-form-field>
+        <div
+          *ngIf="
+            profileForm?.get('priceText')?.invalid &&
+            (profileForm?.get('priceText')?.dirty ||
+              profileForm?.get('priceText')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          Please add price details.
+        </div>
+      </div>
+
+      <!-- <div class="form-group">
+        <label for="eventIdBts">BTS Id</label>
+        <input
+          formControlName="eventIdBts"
+          type="text"
+          class="form-control"
+          id="eventIdBts"
+          aria-describedby="eventIdBtsHelp"
+        />
+        <div
+          *ngIf="
+            profileForm?.get('eventIdBts')?.invalid &&
+            (profileForm?.get('eventIdBts')?.dirty ||
+              profileForm?.get('eventIdBts')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          Please add BTS Id.
+        </div>
+      </div> -->
+
+      <div class="form-group">
+        <!-- <label for="eventIdBts">BTS Id</label>
+      <input
+        formControlName="eventIdBts"
+        type="text"
+        class="form-control"
+        id="eventIdBts"
+        aria-describedby="eventIdBtsHelp"
+      /> -->
+        <mat-form-field>
+          <mat-label>BTS Id</mat-label>
+          <input matInput id="eventIdBts" formControlName="eventIdBts" />
+        </mat-form-field>
+        <div
+          *ngIf="
+            profileForm?.get('eventIdBts')?.invalid &&
+            (profileForm?.get('eventIdBts')?.dirty ||
+              profileForm?.get('eventIdBts')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          Please add BTS Id.
+        </div>
+      </div>
+
+      <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button
+          type="button"
+          class="btn btn-success btn-sm"
+          [ngStyle]="{
+            cursor: profileForm?.valid ? 'pointer' : 'not-allowed',
+            margin: '5px'
+          }"
+          (click)="submitShow()"
+          [disabled]="!profileForm?.valid"
+        >
+          OK
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-sm"
+          style="margin: 5px"
+          (click)="cancelAddShow()"
+        >
+          Cancel
+        </button>
+      </div> -->
+
+      <div style="display: flex; justify-content: end; align-items: center">
+        <button
+          mat-stroked-button
+          [ngStyle]="{
+            cursor: profileForm?.valid ? 'pointer' : 'not-allowed',
+            margin: '5px'
+          }"
+          (click)="submitShow()"
+          [disabled]="!profileForm?.valid"
+        >
+          OK
+        </button>
+
+        <button mat-stroked-button (click)="cancelUpdateShow()">Cancel</button>
+      </div>
+
+      <br />
+      <br />
+    </div>
+  </form>
+
+  <div>
+    <div *ngIf="isUpdating">Updating...</div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <!-- <hr />
+
+        <textarea *ngIf="!profileForm.invalid" style="width: 100%;" rows="15">{{
+          profileForm.value | json }}</textarea> -->
+    <!-- <p>
+          Value: {{ profileFormJson }}
+        </p> -->
+    <!--
+          <p>
+          Form Status: {{ profileForm.status }}
+        </p>
+
+      -->
+    <!-- <pre>{{ profileForm.value | json }}</pre> -->
+  </div>
+</div>
